@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Pay Calculator</title>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            width: 100%;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Pay Calculator</h1>
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" id="employeeName" placeholder="Enter employee name">
+        
+        <label for="hoursWorked">Hours Worked:</label>
+        <input type="number" id="hoursWorked" placeholder="Enter hours worked">
+        
+        <label for="ratePerHour">Rate per Hour:</label>
+        <input type="number" id="ratePerHour" placeholder="Enter rate per hour">
+        
+        <button onclick="calculatePay()">Calculate Pay</button>
+        
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // JavaScript Function
+        function calculatePay() {
+            const name = document.getElementById('employeeName').value;
+            const hoursWorked = parseFloat(document.getElementById('hoursWorked').value);
+            const ratePerHour = parseFloat(document.getElementById('ratePerHour').value);
+            
+            if (!name || isNaN(hoursWorked) || isNaN(ratePerHour)) {
+                alert("Please enter valid inputs.");
+                return;
+            }
+            
+            // Calculate basic pay
+            const basicPay = hoursWorked * ratePerHour;
+            let tax = 0;
+
+            // Calculate tax based on basic pay
+            if (basicPay > 50000) {
+                tax = 0.2 * basicPay;
+            } else if (basicPay >= 20000 && basicPay <= 50000) {
+                tax = 0.1 * basicPay;
+            }
+
+            // Calculate net pay
+            const netPay = basicPay - tax;
+
+            // Display result
+            document.getElementById('result').innerHTML = `
+                <p>Employee Name: ${name}</p>
+                <p>Basic Pay: KSH ${basicPay.toFixed(2)}</p>
+                <p>Tax: KSH ${tax.toFixed(2)}</p>
+                <p>Net Pay: KSH ${netPay.toFixed(2)}</p>
+            `;
+        }
+    </script>
+</body>
+</html>
